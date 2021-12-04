@@ -2,13 +2,17 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
-const env = process.env.NODE_ENV || 'local';
-const whitelist = [];
-if (env === 'prod') {
-  whitelist.push('https://creditu-players-assessment-ui.herokuapp.com');
-} else {
-  whitelist.push(/http:\/\/localhost:[0-9]+$/);
-}
+// const env = process.env.NODE_ENV || 'local';
+// const whitelist = [];
+// if (env === 'prod') {
+//   whitelist.push('https://creditu-players-assessment-ui.herokuapp.com');
+// } else {
+//   whitelist.push(/http:\/\/localhost:[0-9]+$/);
+// }
+const whitelist: any[] = process.env.WHITELIST.split(',').filter(
+  (vars) => vars !== '',
+);
+whitelist.push(/http:\/\/localhost:[0-9]+$/);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
